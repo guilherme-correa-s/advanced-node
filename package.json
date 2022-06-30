@@ -1,0 +1,20 @@
+{
+  "name": "study-advanced-node",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./dist",
+    "build": "rimraf dist && tsc"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/module-alias": "^2.0.1",
+    "@types/node": "^18.0.0",
+    "module-alias": "^2.2.2",
+    "rimraf": "^3.0.2",
+    "typescript": "^4.7.4"
+  }
+}
