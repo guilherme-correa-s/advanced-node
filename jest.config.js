@@ -11,6 +11,6 @@ module.exports = {
     '<rootDir>/tests'
   ],
   transform: {
-    '\\.ts$': 'ts-jes'
+    '\\.ts$': 'ts-jest'
   }
 }
