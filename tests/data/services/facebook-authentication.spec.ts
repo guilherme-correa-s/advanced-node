@@ -1,28 +1,34 @@
+import { AuthenticationError } from '@/domain/errors'
 import { FacebookAuthentication } from '@/domain/features'
 
 class FacebookAuthenticationService {
   constructor (private readonly loadFacebookUserByTokenApi: LoadFacebookUserApi) {}
 
-  async perform (params: FacebookAuthentication.Params): Promise<void> {
+  async perform (params: FacebookAuthentication.Params): Promise<AuthenticationError> {
     await this.loadFacebookUserByTokenApi.loadUser({ token: params.token })
+    return new AuthenticationError()
   }
 }
 
 interface LoadFacebookUserApi {
-  loadUser: (params: LoadFacebookUserByTokenApi.Params) => Promise<void>
+  loadUser: (params: LoadFacebookUserByTokenApi.Params) => Promise<LoadFacebookUserByTokenApi.Result>
 }
 
 namespace LoadFacebookUserByTokenApi {
   export type Params = {
     token: string
   }
+
+  export type Result = undefined
 }
 
 class LoadFacebookUserApiSpy implements LoadFacebookUserApi {
   token?: string
+  result = undefined
 
-  async loadUser (params: LoadFacebookUserByTokenApi.Params): Promise<void> {
+  async loadUser (params: LoadFacebookUserByTokenApi.Params): Promise<LoadFacebookUserByTokenApi.Result> {
     this.token = params.token
+    return this.result
   }
 }
 
@@ -35,5 +41,15 @@ describe('FacebookAuthenticationService', () => {
     await sut.perform({ token: 'any_token' })
 
     expect(loadFacebookUserApi.token).toBe('any_token')
+  })
+
+  it('should return AuthenticationError when LoadFacebookApi returns undefined', async () => {
+    const loadFacebookUserApi = new LoadFacebookUserApiSpy()
+    loadFacebookUserApi.result = undefined
+    const sut = new FacebookAuthenticationService(loadFacebookUserApi)
+
+    const authResult = await sut.perform({ token: 'any_token' })
+
+    expect(authResult).toBeInstanceOf(AuthenticationError)
   })
 })
