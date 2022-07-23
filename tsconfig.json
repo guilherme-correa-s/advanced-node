@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "experimentalDecorators": true,
     "outDir": "dist",
     "rootDir": "src",
     "target": "es2021",
@@ -14,7 +15,8 @@
     "paths": {
       "@/*": ["*"],
       "@/tests/*": ["../tests/*"]
-    }
+    },
+    "emitDecoratorMetadata": true
   },
   "include": ["src", "tests"]
 }
