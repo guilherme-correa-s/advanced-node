@@ -2,7 +2,6 @@
   "compilerOptions": {
     "experimentalDecorators": true,
     "outDir": "dist",
-    "rootDir": "src",
     "target": "es2021",
     "module": "commonjs",
     "moduleResolution": "node",
@@ -18,5 +17,5 @@
     },
     "emitDecoratorMetadata": true
   },
-  "include": ["src", "tests"]
+  "include": ["src", "tests"],
 }
